@@ -4,7 +4,6 @@
 #Created by: Noah Kulas
 #Created date: Jun 7 2020
 
-import numpy
 import math
 
 Number = int(input("Enter the number to factor: "))
@@ -15,33 +14,34 @@ RootByTen = math.floor(
     / 10
 )
 
-CandidateFactorLeads = numpy.empty(shape=0)
+#Tails are the rightmost digit of the number
+CandidateTails = []
 
 i = 10
 while i < 100:
-    Row = i % 10
-    Column = math.floor(i / 10)
+    Column = i % 10
+    Row = math.floor(i / 10)
     Rotation = (Row * Column) % 10
 
     if (Number - Rotation) % 10 == 0:
-        CandidateFactorLeads = numpy.append(CandidateFactorLeads, Row)
+        if not CandidateTails.__contains__(Row):
+            CandidateTails.append(Row)
     i += 1
 
 FactorsFound = 0
 TotalOperations = 0
 
-for CandidateLead in CandidateFactorLeads:
+for Tail in CandidateTails:
+    Multiplier = 0
+    while Multiplier < RootByTen:
+        CandidateFactor = (10 * Multiplier) + Tail
 
-    CandidateFactorMultiplier = 0
-    while CandidateFactorMultiplier <= RootByTen:
-        CandidateFactor = (10 * CandidateFactorMultiplier) + CandidateLead
-
-        if Number % CandidateFactor == 0:
+        if (Number % CandidateFactor == 0):
             print(CandidateFactor, Number / CandidateFactor)
             FactorsFound += 1
-        TotalOperations += 1
 
-        CandidateFactorMultiplier += 1
+        TotalOperations += 1
+        Multiplier += 1
 
 if FactorsFound == 1:
     print ("Number is prime")
