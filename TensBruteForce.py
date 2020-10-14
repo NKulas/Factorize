@@ -4,7 +4,12 @@
 #Created by: Noah Kulas
 #Created date: Jun 7 2020
 
+#TODO Since possible primes are separated by alternating distances of 2 and 4,
+#some ten steps can be eliminated
+#Starting at the square root and working down may be quicker for larger numbers
+
 import math
+import MathHelpers
 
 Number = int(input("Enter the number to factor: "))
 RootByTen = math.floor(
@@ -23,7 +28,7 @@ while i < 100:
     Row = math.floor(i / 10)
     Rotation = (Row * Column) % 10
 
-    if (Number - Rotation) % 10 == 0:
+    if Rotation == MathHelpers.GetDigits(Number, 1):
         if not CandidateTails.__contains__(Row):
             CandidateTails.append(Row)
     i += 1
@@ -35,6 +40,7 @@ for Tail in CandidateTails:
     Multiplier = 0
     while Multiplier < RootByTen:
         CandidateFactor = (10 * Multiplier) + Tail
+        #CandidateFactor = (20 * Multiplier) + Tail
 
         if (Number % CandidateFactor == 0):
             print(CandidateFactor, Number / CandidateFactor)

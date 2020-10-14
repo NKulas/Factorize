@@ -5,6 +5,7 @@
 #Created date: Jul 19 2020
 
 import math
+import MathHelpers
 
 Number = int(input("Enter the number to factor: "))
 RootByHundred = math.floor(
@@ -14,24 +15,21 @@ RootByHundred = math.floor(
     / 100
 )
 
-
-#Tails two rightmost digits of a number
+#Tails are two rightmost digits of a number
 CandidateTails = []
 
 Row = 0
-while Row < 10:
+while Row < 100:
     Column = 0
     while Column < 100:
         Rotation = (Row * Column) % 100
 
-        if (Number - Rotation) % 10 == 0:
+        if Rotation == MathHelpers.GetDigits(Number, 2):
             Final = 0
-
-            if Row > Column:
-                Final = Row
+            if (Row > Column):
+                Final = Row       
             else:
                 Final = Column
-            
             if not CandidateTails.__contains__(Final):
                 CandidateTails.append(Final)
         
